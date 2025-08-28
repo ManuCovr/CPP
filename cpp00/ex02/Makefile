@@ -5,34 +5,39 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/03 12:25:35 by mde-maga          #+#    #+#              #
-#    Updated: 2025/07/03 12:33:55 by mde-maga         ###   ########.fr        #
+#    Created: 2025/08/15 14:30:32 by mde-maga          #+#    #+#              #
+#    Updated: 2025/08/26 10:34:06 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX       = c++
 CXXFLAGS  = -Wall -Wextra -Werror -std=c++98 -pedantic
 
-SRC       = megaphone.cpp
-OBJ       = $(SRC:.cpp=.o)
-NAME      = megaphone
+SRCS      = Account.cpp tests.cpp
+OBJS      = $(SRCS:.cpp=.o)
+NAME      = bank
+RM        = rm -f
+
+ifdef DEBUG
+	CXXFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
-	@echo "It's ready to run boss."
+$(NAME): $(OBJS)
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	@echo "Bank executable is ready boss."
 
 %.o: %.cpp
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ)
-	@echo "All clean boss."
+	@$(RM) $(OBJS)
+	@echo "All object files cleaned boss."
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo "Executable file cleaned boss."
+	@$(RM) $(NAME)
+	@echo "Executable cleaned boss."
 
 re: fclean all
 

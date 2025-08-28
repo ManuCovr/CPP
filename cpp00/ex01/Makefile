@@ -5,17 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/03 12:25:35 by mde-maga          #+#    #+#              #
-#    Updated: 2025/07/03 12:33:55 by mde-maga         ###   ########.fr        #
+#    Created: 2025/08/15 12:37:31 by mde-maga          #+#    #+#              #
+#    Updated: 2025/08/15 12:49:07 by mde-maga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CXX       = c++
 CXXFLAGS  = -Wall -Wextra -Werror -std=c++98 -pedantic
 
-SRC       = megaphone.cpp
+SRC       = main.cpp Contact.cpp PhoneBook.cpp
 OBJ       = $(SRC:.cpp=.o)
-NAME      = megaphone
+NAME      = phonebook
 
 all: $(NAME)
 

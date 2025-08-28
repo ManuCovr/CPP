@@ -1,19 +1,45 @@
+heade/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 12:15:32 by mde-maga          #+#    #+#             */
+/*   Updated: 2025/07/03 12:24:05 by mde-maga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include <cctype>
 
-int main (int argc, char **argv)
+void print_argument(char *argument)
 {
-	if(argc != 1)
+	while (*argument != '\0')
 	{
-		for (int i = 1; argv[i]; i++)
-		{
-			for(int j = 0; argv[i][j]; j++)
-				std::cout << (char)toupper(argv[i][j]);
-			std::cout << " ";
-		}
+		if (std::isalpha(*argument))
+			std::cout << (char)std::toupper(*argument);
+		else
+			std::cout << *argument;
+		argument++;
+	}
+}
+
+int main(int argc, char **argv)
+{
+	char **args;
+
+	args = ++argv;
+	if (argc == 1)
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+	else
+	{
+		while (*args != NULL)
+			{
+				print_argument(*args);
+				args++;
+			}
 		std::cout << std::endl;
 	}
-	else
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-	return 0;
+	return (0);
 }
