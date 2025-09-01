@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:39:18 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/08/26 10:17:26 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:51:48 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ public:
     std::string GetContactFullName(int id);
 };
 
-#endif // EX01_PHONEBOOK_H
+#endif
+

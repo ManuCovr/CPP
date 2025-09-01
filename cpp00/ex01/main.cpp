@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 12:41:06 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/08/15 13:22:10 by mde-maga         ###   ########.fr        */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "header.hpp"
 
@@ -72,11 +61,8 @@ int main() {
 				}
 			}
 
-			// Defensive fallback (shouldn't happen)
 			if (insertIndex < 0)
 				insertIndex = nextId;
-
-			// Collect contact fields (validation as before)
 			std::string First;
 			std::string Last;
 			std::string Nick;
@@ -86,10 +72,6 @@ int main() {
 			std::system("clear");
 
 			std::cout << "First Name: ";
-			// ensure no leftover newline
-			// (when coming from std::cin >> input earlier)
-			// safe to ignore a single newline here
-			// we already ignored after confirmation above if needed
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			while (First.empty()) {
 				std::getline(std::cin, First);
@@ -163,6 +145,9 @@ int main() {
 			std::system("clear");
 			Book.IdPrintContact(id);
 		} else if (input == "EXIT") {
+			std::cout << "Leaving... Goodbye!\n";
+			sleep(2);
+			std::system("clear");
 			return (0);
 		}
 	}

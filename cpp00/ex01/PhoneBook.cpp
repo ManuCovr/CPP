@@ -6,7 +6,7 @@
 /*   By: mde-maga <mde-maga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:38:57 by mde-maga          #+#    #+#             */
-/*   Updated: 2025/08/26 10:21:23 by mde-maga         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:50:00 by mde-maga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int PhoneBook::isContactUsed(int id) {
 	return (Contacts[id].ContactExists());
 }
 
-// NEW: Return true if every slot in the phonebook is used
 bool PhoneBook::isFull() {
 	for (int i = 0; i < MaxId; ++i) {
 		if (!isContactUsed(i))
