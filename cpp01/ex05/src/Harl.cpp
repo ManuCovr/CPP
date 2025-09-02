@@ -31,10 +31,14 @@ void	Harl::error()
 	std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
-void	Harl::complain(std::string level)
+void Harl::complain(std::string level)
 {
-	fc func[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
-	for (int i = 0; i < 4; i++)
-		if (_level[i] == level)
-			(this->*func[i])();
+    fc func[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+    for (int i = 0; i < 4; i++) {
+        if (_level[i] == level) {
+            (this->*func[i])();
+            return;
+        }
+    }
+    std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
 }

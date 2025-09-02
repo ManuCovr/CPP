@@ -8,6 +8,6 @@ int	main()
 	while (std::cin >> test)
 	{
 		harl.complain(test);
-		std::cout << "type the level of the complain you want to make (DEBUG, INFO, WARNING or ERROR): ";
+		std::cout << "Type the level of the complain you want to make (DEBUG, INFO, WARNING or ERROR): ";
 	}
 }
