@@ -1,38 +1,31 @@
 #include "../inc/WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal()
-{
+WrongAnimal::WrongAnimal() {
 	_type = "WrongAnimal";
 	std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal& ref)
-{
-	*this = ref;
-	std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
+WrongAnimal::WrongAnimal(const WrongAnimal& ref) {
+	*this = ref; // calls operator= safely here
+	std::cout << "A wild (but the wrong one) Animal appeared (copied)!" << std::endl;
 }
 
-WrongAnimal	&WrongAnimal::operator=(const WrongAnimal &ref)
-{
-	if (this != &ref)
-	{
-		*this = ref;
-		std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &ref) {
+	if (this != &ref) {
+		this->_type = ref._type;
 	}
+	std::cout << "WrongAnimal copied with assignment!" << std::endl;
 	return *this;
 }
 
-WrongAnimal::~WrongAnimal()
-{
+WrongAnimal::~WrongAnimal() {
 	std::cout << "Animal (the wrong one) ran away!" << std::endl;
 }
 
-std::string	WrongAnimal::getType() const
-{
+std::string WrongAnimal::getType() const {
 	return _type;
 }
 
-void	WrongAnimal::makeSound() const
-{
+void WrongAnimal::makeSound() const {
 	std::cout << " * Random (but wrong) animal sound * " << std::endl;
 }

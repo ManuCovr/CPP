@@ -29,6 +29,7 @@ int main() {
     ScavTrap scav6("SuperBot");
     clap.attack("Target");
     scav6.attack("Target");
+    
 
     std::cout << "\n--- Stats Summary ---" << std::endl;
     std::cout << "ClapTrap: HP(10), Energy(10), Attack(0)" << std::endl;

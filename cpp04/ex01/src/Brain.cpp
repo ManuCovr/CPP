@@ -24,7 +24,7 @@ Brain	&Brain::operator=(const Brain &ref)
 
 Brain::~Brain()
 {
-	std::cout << "Brain withered" << std::endl;
+	std::cout << "Brain womp womp" << std::endl;
 }
 
 void	Brain::setIdea(int const id, std::string const idea)

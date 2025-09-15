@@ -1,62 +1,47 @@
 #include "../inc/AAnimal.hpp"
-#include "../inc/WrongAnimal.hpp"
 #include "../inc/Dog.hpp"
 #include "../inc/Cat.hpp"
-#include "../inc/WrongCat.hpp"
 #include "../inc/Brain.hpp"
 
-int main()
-{
-	std::cout << "Animal array test" << std::endl;
-	std::cout << "----------------------------------------------------" << std::endl;
-	const AAnimal* Zoo[20];
-	for (int i = 0; i < 10; i++)
-	{
-		Zoo[i] = new Cat();
-		std::cout << std::endl;
-	}
-	for (int i = 10; i < 20; i++)
-	{
-		Zoo[i] = new Dog();
-		std::cout << std::endl;
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		Zoo[i]->makeSound();
-		std::cout << std::endl;
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		delete Zoo[i];
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	std::cout << "Deep copy test" << std::endl;
-	std::cout << "----------------------------------------------------" << std::endl;
-	Dog basic;
-	{
-		std::cout << std::endl;
-		Dog tmp = basic;
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << "Ideas test" << std::endl;
-	std::cout << "----------------------------------------------------" << std::endl;
-	Cat	a;
-	Dog	b;
-	a.setCatIdea(0, "fish");
-	b.setDogIdea(0, "ball");
-	{
-		Cat c = a;
-		std::cout << std::endl;
-		std::cout << "The Cat's thinking about: " << c.getCatIdea(0) << std::endl;
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	std::cout << "The Cat's thinking about: " << a.getCatIdea(0) << std::endl;
-	std::cout << std::endl;
-	std::cout << "The Dog's thinking about: " << b.getDogIdea(0) << std::endl;
-	std::cout << std::endl;
-	return 0;
+int main() {
+    std::cout << "=== POLYMORPHISM & DEEP COPY TEST ===\n\n";
+
+    // ---- POLYMORPHISM TEST ----
+    std::cout << "--- Animal array test ---\n";
+    const AAnimal* Zoo[6];  // smaller array for brevity
+    for (int i = 0; i < 3; ++i)
+        Zoo[i] = new Cat();
+    for (int i = 3; i < 6; ++i)
+        Zoo[i] = new Dog();
+
+    for (int i = 0; i < 6; ++i) {
+        std::cout << Zoo[i]->getType() << " says: ";
+        Zoo[i]->makeSound();
+    }
+
+    for (int i = 0; i < 6; ++i)
+        delete Zoo[i];
+
+    // ---- DEEP COPY TEST ----
+    std::cout << "\n--- Deep copy test ---\n";
+    Dog basicDog;
+    basicDog.setDogIdea(0, "I want a bone");
+
+    Dog copyDog = basicDog;  // copy constructor
+    copyDog.setDogIdea(0, "I want TWO bones"); 
+
+    std::cout << "Original Dog thinks: " << basicDog.getDogIdea(0) << "\n";
+    std::cout << "Copied Dog thinks: " << copyDog.getDogIdea(0) << "\n";
+
+    Cat basicCat;
+    basicCat.setCatIdea(0, "Nap time");
+
+    Cat copyCat;
+    copyCat = basicCat;  // assignment operator
+    copyCat.setCatIdea(0, "Tuna time");
+
+    std::cout << "Original Cat thinks: " << basicCat.getCatIdea(0) << "\n";
+    std::cout << "Copied Cat thinks: " << copyCat.getCatIdea(0) << "\n";
+
+    return 0;
 }

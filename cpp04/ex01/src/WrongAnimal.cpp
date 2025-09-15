@@ -1,38 +1,34 @@
 #include "../inc/WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal()
+WrongAnimal::WrongAnimal() : _type("WrongAnimal")
 {
-	_type = "WrongAnimal";
-	std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
+    std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal& ref)
+WrongAnimal::WrongAnimal(const WrongAnimal& ref) : _type(ref._type)
 {
-	*this = ref;
-	std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
+    std::cout << "A wild (but the wrong one) Animal appeared! (copy constructor)" << std::endl;
 }
 
-WrongAnimal	&WrongAnimal::operator=(const WrongAnimal &ref)
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &ref)
 {
-	if (this != &ref)
-	{
-		*this = ref;
-		std::cout << "A wild (but the wrong one) Animal appeared!" << std::endl;
-	}
-	return *this;
+    if (this != &ref)
+        _type = ref._type;
+    std::cout << "A wild (but the wrong one) Animal appeared! (operator=)" << std::endl;
+    return *this;
 }
 
 WrongAnimal::~WrongAnimal()
 {
-	std::cout << "Animal (the wrong one) ran away!" << std::endl;
+    std::cout << "Animal (the wrong one) ran away!" << std::endl;
 }
 
-std::string	WrongAnimal::getType() const
+std::string WrongAnimal::getType() const
 {
-	return _type;
+    return _type;
 }
 
-void	WrongAnimal::makeSound() const
+void WrongAnimal::makeSound() const
 {
-	std::cout << " * Random (but wrong) animal sound * " << std::endl;
+    std::cout << " * Random (but wrong) animal sound * " << std::endl;
 }
