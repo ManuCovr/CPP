@@ -1,45 +1,41 @@
-#ifndef BUREAUCRAT_HPP
+#ifndef	BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
-
-# include <exception>
 # include <iostream>
+# include <stdexcept>
 # include <string>
 
-# define HIGHEST_GRADE 1
-# define LOWEST_GRADE 150
+class Bureaucrat
+{
+private:
+	const std::string	_name;
+	int					_grade;
+	Bureaucrat();
 
-class Bureaucrat {
-	public:
-		Bureaucrat(void);
-		Bureaucrat(const Bureaucrat& to_copy);
-		Bureaucrat(std::string name, int grade);
-		Bureaucrat &operator=(const Bureaucrat &original);
-		~Bureaucrat(void);
+public:
+	Bureaucrat(std::string name, int grade);
+	Bureaucrat(const Bureaucrat& ref);
+	Bureaucrat& operator=(const Bureaucrat& ref);
+	~Bureaucrat();
 
-		const std::string& getName(void) const;
-		int getGrade(void) const;
+	class GradeTooHighException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
 
-		void setGrade(int grade);
+	};
+	class GradeTooLowException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
 
-		void incrementGrade(void);
-		void decrementGrade(void);
+	void		upGrade();
+	void		downGrade();
 
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
-
-	private:
-		const std::string name;
-		int grade;
+	std::string	getName() const;
+	int			getGrade() const;
 };
 
-std::ostream &operator<<(std::ostream &stream, Bureaucrat &Bureaucrat);
+std::ostream&	operator<<(std::ostream& out, const Bureaucrat& ref);
 
-#endif // BUREAUCRAT_HPP
+#endif

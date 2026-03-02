@@ -1,46 +1,43 @@
-#ifndef FORM_HPP
+#ifndef	FORM_HPP
 # define FORM_HPP
-
-# include <exception>
-# include <string>
 # include "Bureaucrat.hpp"
 
-# define HIGHEST_GRADE 1
-# define LOWEST_GRADE 150
+class Bureaucrat;
 
-class Form {
-	public:
-		Form(const Form& to_copy);
-		Form(std::string name, int grade_to_sign, int grade_to_execute);
-		Form &operator=(const Form &original);
-		~Form(void);
+class Form
+{
+private:
+	const std::string	_name;
+	bool				_sign;
+	const int			_gradeSign;
+	const int			_gradeExe;
+	Form();
 
-		const std::string& getName(void) const;
-		bool getSignState(void) const;
-		int getGradeToSign(void) const;
-		int getGradeToExecute(void) const;
+public:
+	Form(std::string name, int gradeSign, int gradeExe);
+	Form(const Form& ref);
+	Form& operator=(const Form& ref);
+	~Form();
 
-		void beSigned(Bureaucrat &bureaucrat);
+	class GradeTooHighException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
+	class GradeTooLowException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
 
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
+	void	beSigned(const Bureaucrat& dude);
 
-	private:
-		const std::string name;
-		bool is_signed;
-		const int grade_to_sign;
-		const int grade_to_execute;
-		Form(void);
+	std::string	getName() const;
+	bool		getSign() const;
+	int			getGradeSign() const;
+	int			getGradeExe() const;
 };
 
-std::ostream &operator<<(std::ostream &stream, Form &Form);
+std::ostream&	operator<<(std::ostream& out, const Form& ref);
 
-#endif // FORM_HPP
+#endif

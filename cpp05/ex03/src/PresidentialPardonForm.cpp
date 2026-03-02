@@ -1,46 +1,38 @@
-#include <iostream>
 #include "../inc/PresidentialPardonForm.hpp"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
-: AForm("PresidentialPardonForm", target, 25, 5) {
-	#ifdef LOGS
-		cout << "[PresidentialPardonForm] Parameterized Constructor called" << endl;
-	#endif
-};
+    : AForm("PresidentialPardonForm", 25, 5), _target(target)
+{}
 
-PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &copy)
-: AForm(copy.getName(), copy.getTarget(), copy.getGradeToSign(), copy.getGradeToExecute()) {
-	#ifdef LOGS
-		cout << "[PresidentialPardonForm] Copy Constructor called" << endl;
-	#endif
-	*this = copy;
-}
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& ref)
+    : AForm(ref), _target(ref._target)
+{}
 
-PresidentialPardonForm::~PresidentialPardonForm(void) {
-	#ifdef LOGS
-		cout << "[PresidentialPardonForm] Destructor called" << endl;
-	#endif
-}
-
-PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPardonForm &assign) {
-	#ifdef LOGS
-		cout << "[PresidentialPardonForm] Copy Assignment Operator called" << endl;
-	#endif
-	if (this == &assign)
-		return *this;
-	return *this;
-}
-
-void PresidentialPardonForm::executeSuperClassForm(Bureaucrat const& executor) const
+PresidentialPardonForm&
+PresidentialPardonForm::operator=(const PresidentialPardonForm& /*ref*/)
 {
-	if (executor.getGrade() > this->getGradeToExecute())
-		throw Bureaucrat::GradeTooLowException();
-	else if (this->getSignState() == false)
-		cerr << "PresidentialPardonForm couldn't be executed by " << executor.getName() << " because it wasn't signed!" << endl;
-	else
-		cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << endl;
+    return *this;
+}
+
+PresidentialPardonForm::~PresidentialPardonForm() {}
+
+const char*
+PresidentialPardonForm::GradeNotExcusedException::what() const throw()
+{
+    return "Grade not accepted, Zaphod Beeblebrox will never forgive you!";
+}
+
+std::string PresidentialPardonForm::getTarget() const
+{
+    return _target;
+}
+
+void PresidentialPardonForm::execute(Bureaucrat const & executor) const
+{
+    if (this->getSign() && executor.getGrade() <= this->getGradeExe())
+        std::cout << this->getTarget()
+                  << " has been pardoned by Zaphod Beeblebrox."
+                  << std::endl;
+    else
+        throw GradeNotExcusedException();
 }

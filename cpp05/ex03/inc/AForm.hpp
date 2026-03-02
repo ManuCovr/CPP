@@ -1,52 +1,44 @@
-#ifndef AFORM_HPP
+#ifndef	AFORM_HPP
 # define AFORM_HPP
-
-# include <exception>
-# include <string>
 # include "Bureaucrat.hpp"
-
-# define HIGHEST_GRADE 1
-# define LOWEST_GRADE 150
 
 class Bureaucrat;
 
-class AForm {
-	public:
-		AForm(std::string name, std::string target, int grade_to_sign, int grade_to_execute);
-		AForm(AForm& to_copy);
-		AForm &operator=(AForm& original);
-		virtual ~AForm(void);
+class AForm
+{
+private:
+	AForm();
+	const std::string	_name;
+	bool				_sign;
+	const int			_gradeSign;
+	const int			_gradeExe;
 
-		const std::string& getName(void) const;
-		const std::string& getTarget(void) const;
-		bool getSignState(void) const;
-		int getGradeToSign(void) const;
-		int getGradeToExecute(void) const;
+public:
+	AForm(std::string name, int gradeSign, int gradeExe);
+	AForm(const AForm& ref);
+	AForm& operator=(const AForm& ref);
+	virtual ~AForm();
 
-		void beSigned(Bureaucrat &bureaucrat);
-		void execute(Bureaucrat const& executor) const;
+	class GradeTooHighException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
+	class GradeTooLowException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
 
-		class GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
-		class GradeTooLowException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
+	virtual void	beSigned(const Bureaucrat& dude);
+	virtual void	execute(Bureaucrat const & executor) const = 0;
 
-	private:
-		const std::string name;
-		const std::string target;
-		bool is_signed;
-		const int grade_to_sign;
-		const int grade_to_execute;
-		AForm(void);
-		virtual void executeSuperClassForm(Bureaucrat const& executor) const = 0;
+	virtual std::string	getName() const;
+	virtual bool		getSign() const;
+	virtual int			getGradeSign() const;
+	virtual int			getGradeExe() const;
 };
 
-std::ostream &operator<<(std::ostream &stream, AForm &forM);
+std::ostream&	operator<<(std::ostream& out, const AForm& ref);
 
-#endif // AFORM_HPP
+#endif

@@ -1,100 +1,28 @@
-#include <cstdlib>
 #include "../inc/Bureaucrat.hpp"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-
-int main(void)
+int	main()
 {
-	cout << "GENERAL" << endl;
+	Bureaucrat	teste("GOAT", 2);
+	std::cout << "BUREAUCRAT INFO: " << teste << std::endl;
+	try
 	{
-		// Constructor
-		Bureaucrat	a("Goku", 87);
-		// Copy Constructor
-		Bureaucrat	b(a);
-		// Copy assignment
-		Bureaucrat	c = b;
-
-		// ostream overload
-		cout << "a: " << a << endl;
-		cout << "b: " << b << endl;
-		cout << "c: " << c << endl;
+		Bureaucrat	vegeta("Vegeta", 1);
+		std::cout << std::endl;
+		std::cout << "BUREAUCRAT INFO: " << vegeta << std::endl;
+		Bureaucrat	goku("Goku", 150);
+		std::cout << std::endl;
+		std::cout << "BUREAUCRAT INFO: " << goku << std::endl;
+		Bureaucrat	bulma("Bulma", 149);
+		std::cout << std::endl;
+		std::cout << "BUREAUCRAT INFO: " << bulma << std::endl;
+		bulma.downGrade();
+		std::cout << std::endl;
+		std::cout << "BUREAUCRAT INFO: " << bulma << std::endl;
+		teste.upGrade();
+		std::cout << "BUREAUCRAT INFO: " << teste << std::endl;
 	}
-
-	cout << endl;
-
+	catch(const std::exception& e)
 	{
-		cout << "TEST 1" << endl;
-		try
-		{
-			// grade too low
-			Bureaucrat	a("A", LOWEST_GRADE + 1);
-			cout << a << endl;
-		}
-		catch (std::exception& e) {
-			cerr << e.what() << endl;
-		}
-
-		cout << endl;
-
-		cout << "TEST 2" << endl;
-		try
-		{
-			// grade too high
-			Bureaucrat	b("B", HIGHEST_GRADE - 1);
-			cout << b << endl;
-		}
-		catch (std::exception& e) {
-			cerr << e.what() << endl;
-		}
-
-		cout << endl;
-
-		cout << "TEST 3" << endl;
-		try
-		{
-			// Increment to a grade higher than HIGHEST_GRADE
-			Bureaucrat	c("C", HIGHEST_GRADE);
-
-			c.incrementGrade();
-			cout << c << endl;
-		}
-		catch (std::exception& e) {
-			cerr << e.what() << endl;
-		}
-
-		cout << endl;
-
-		cout << "TEST 4" << endl;
-		try
-		{
-			// Decrement to a grade lower than LOWEST_GRADE
-			Bureaucrat	d("D", LOWEST_GRADE);
-
-			d.decrementGrade();
-			cout << d << endl;
-		}
-		catch (std::exception& e) {
-			cerr << e.what() << endl;
-		}
-
-		cout << endl;
-
-		cout << "TEST 5" << endl;
-		try 
-		{
-			// Acceptable grade changes
-			Bureaucrat	Vegeta("VEGETA", 10);
-
-			Vegeta.decrementGrade();
-			cout << Vegeta << endl;
-			Vegeta.incrementGrade();
-			cout << Vegeta << endl;
-		}
-		catch (std::exception& e) {
-			cerr << e.what() << endl;
-		}
+		std::cerr << "Invalid Bureaucrat grade: " << e.what() << std::endl;
 	}
-	return EXIT_SUCCESS;
 }

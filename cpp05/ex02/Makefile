@@ -1,16 +1,16 @@
 NAME    = TheFiles
 
 SRC_DIR = src
-SRC     = $(SRC_DIR)/main.cpp $(SRC_DIR)/Bureaucrat.cpp $(SRC_DIR)/AForm.cpp $(SRC_DIR)/PresidentialPardonForm.cpp $(SRC_DIR)/ShrubberyCreationForm.cpp $(SRC_DIR)/RobotomyRequestForm.cpp
-CC      = @c++
-CFLAGS  = -std=c++98 -Wall -Wextra -Werror
+SRC     = $(SRC_DIR)/main.cpp $(SRC_DIR)/Bureaucrat.cpp $(SRC_DIR)/AForm.cpp $(SRC_DIR)/PresidentialPardonForm.cpp $(SRC_DIR)/RobotomyRequestForm.cpp $(SRC_DIR)/ShrubberyCreationForm.cpp
+CXX     = c++
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 OBJ_DIR = obj
 OBJS    = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-GREEN   = $'\033[1;32m
-BLUE    = $'\033[1;34m
-RESET   = $'\033[0m
+GREEN   = $'\033[1;32m'
+BLUE    = $'\033[1;34m'
+RESET   = $'\033[0m'
 
 all: $(NAME)
 	@echo -e "$(GREEN)*-----------------------*$(RESET)"
@@ -18,13 +18,13 @@ all: $(NAME)
 	@echo -e "$(GREEN)*-----------------------*$(RESET)"
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	@$(CXX) $(CXXFLAGS) -o $@ $^
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
 	@rm -f $(OBJS)

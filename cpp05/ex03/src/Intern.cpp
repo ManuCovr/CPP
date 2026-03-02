@@ -1,79 +1,46 @@
 #include "../inc/Intern.hpp"
-#include "../inc/AForm.hpp"
-#include "../inc/ShrubberyCreationForm.hpp"
-#include "../inc/PresidentialPardonForm.hpp"
-#include "../inc/RobotomyRequestForm.hpp"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-
-Intern::Intern(void) {
-    #ifdef LOGS
-    	cout << "[Intern] Default Constructor called" << endl;
-    #endif
-}
-
-Intern::Intern(const Intern &copy)
+Intern::Intern()
 {
-	*this = copy;
-    #ifdef LOGS
-	    cout << "[Intern] Copy Constructor called" << endl;
-    #endif
+	_forms[0] = "Presidential pardon";
+	_forms[1] = "Robotomy request";
+	_forms[2] = "Shrubbery creation";
 }
 
-Intern::~Intern() {
-    #ifdef LOGS
-    	cout << "[Intern] Destructor called" << endl;
-    #endif
-}
-
-Intern& Intern::operator=(const Intern &assign)
+Intern::Intern(const Intern& ref)
 {
-    #ifdef LOGS
-	    cout << "[Intern] Copy Assignment Operator called" << endl;
-    #endif
-	if (this == &assign)
-        return *this;
+	*this = ref;
+}
+
+Intern& Intern::operator=(const Intern& ref)
+{
+	if (this != &ref)
+		for (int i = 0; i < 3; i++)
+			this->_forms[i] = ref._forms[i];
 	return *this;
 }
 
-static AForm *newShrubbery(const std::string target) {
-	return new ShrubberyCreationForm(target);
-}
+Intern::~Intern(){}
 
-static AForm *newRobotomy(const std::string target) {
-	return new RobotomyRequestForm(target);
-}
 
-static AForm *newPresidential(const std::string target) {
-	return new PresidentialPardonForm(target);
-}
-
-typedef AForm *(*FormConstructorPtr)(const std::string);
-
-AForm *Intern::makeForm(std::string name, std::string target)
+AForm* Intern::makeForm(std::string form, std::string target)
 {
-    AForm *choosen_form = NULL;
-
-    const std::string form_names[] = {
-        "robotomy request",
-        "presidential pardon",
-        "shrubbery creation"
-    };
-
-    FormConstructorPtr form_constructors[3] = {&newShrubbery, &newRobotomy, &newPresidential};
-
-    for (size_t i = 0; i < 3; i += 1)
+    if (form == "presidential pardon")
     {
-        if (name == form_names[i])
-        {
-            cout << "Intern creates " << name << endl;
-            choosen_form = form_constructors[i](target);;
-            break ;
-        }
+        std::cout << "Intern creates presidential pardon form" << std::endl;
+        return new PresidentialPardonForm(target);
     }
-    if (!choosen_form)
-        cerr << "Intern couldn't create " << name << " form" << endl;
-    return choosen_form;
+    if (form == "robotomy request")
+    {
+        std::cout << "Intern creates robotomy request form" << std::endl;
+        return new RobotomyRequestForm(target);
+    }
+    if (form == "shrubbery creation")
+    {
+        std::cout << "Intern creates shrubbery creation form" << std::endl;
+        return new ShrubberyCreationForm(target);
+    }
+    std::cout << "Intern couldn't create " << form << " form, he's getting fired" << std::endl;
+    return NULL;
 }
+

@@ -1,20 +1,27 @@
 #ifndef ROBOTOMYREQUESTFORM_HPP
 # define ROBOTOMYREQUESTFORM_HPP
-
 # include "AForm.hpp"
 
-class RobotomyRequestForm : public AForm {
-	public:
-		RobotomyRequestForm(std::string target);
-		RobotomyRequestForm(const RobotomyRequestForm &to_copy);
-		~RobotomyRequestForm(void);
+class RobotomyRequestForm: public AForm
+{
+private:
+	const std::string	_target;
+	RobotomyRequestForm();
 
-		RobotomyRequestForm& operator=(const RobotomyRequestForm &assign);
+public:
+	RobotomyRequestForm(std::string target);
+	RobotomyRequestForm(const RobotomyRequestForm& ref);
+	RobotomyRequestForm& operator=(const RobotomyRequestForm& ref);
+	~RobotomyRequestForm();
 
-		void executeSuperClassForm(Bureaucrat const& executor) const;
+	class GradeTooLowException: public std::exception
+	{
+		public:
+			virtual const char	*what() const throw();
+	};
 
-		private:
-			RobotomyRequestForm(void);
+	std::string	getTarget() const;
+	void	execute(Bureaucrat const & executor) const;
 };
 
-#endif // ROBOTOMYREQUESTFORM_HPP
+#endif

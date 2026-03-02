@@ -1,82 +1,51 @@
-#include <iostream>
-#include <fstream>
 #include "../inc/ShrubberyCreationForm.hpp"
-
-using std::cout;
-using std::cerr;
-using std::endl;
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
-: AForm("ShrubberyCreationForm", target, 145, 137) {
-	#ifdef LOGS
-		cout << "[ShrubberyCreationForm] Parameterized constructor called"<< endl;
-	#endif 
-};
+    : AForm("ShrubberyCreationForm", 145, 137), _target(target)
+{}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& to_copy)
-: AForm(to_copy.getName(), to_copy.getTarget(), to_copy.getGradeToSign(), to_copy.getGradeToExecute()) {
-	#ifdef LOGS
-		cout << "[ShrubberyCreationForm] copy constructor called" << endl;
-	#endif
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& ref)
+    : AForm(ref), _target(ref._target)
+{}
+
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& /*ref*/)
+{
+    return *this;
 }
 
-ShrubberyCreationForm::~ShrubberyCreationForm(void) {
-	#ifdef LOGS
-		cout << "[ShrubberyCreationForm] destructor called"<< endl;
-	#endif
-};
+ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm &assign)
+const char* ShrubberyCreationForm::GradeTooLowException::what() const throw()
 {
-	#ifdef LOGS
-		cout << "[ShrubberyCreationForm] copy assignment operator called"<< endl;
-	#endif
-	if (this == &assign)
-		return *this;
-	return *this;
+    return "Grade too low to create shrubbery";
 }
 
-void ShrubberyCreationForm::executeSuperClassForm(Bureaucrat const& executor) const
+std::string ShrubberyCreationForm::getTarget() const
 {
-	if (executor.getGrade() > this->getGradeToExecute())
-		throw Bureaucrat::GradeTooLowException();
-	else if (this->getSignState() == false)
-		cerr << "ShrubberyCreationForm couldn't be executed by " << executor.getName() << " because it wasn't signed!" << endl;
-	else
-	{
-		cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << endl;
-		std::ofstream out;
+    return _target;
+}
 
-		out.open((this->getTarget() + "_shrubbery").c_str(), std::ofstream::in | std::ofstream::trunc);
-
-		out << "\n"
-			<< "                                            ." << "\n"
-			<< "                                    .         ;  " << "\n"
-			<< "       .              .              ;%     ;;   " << "\n"
-			<< "         ,           ,                :;%  %;   " << "\n"
-			<< "          :         ;                   :;%;'     .,   " << "\n"
-			<< " ,.        %;     %;            ;        %;'    ,;" << "\n"
-			<< "   ;       ;%;  %%;        ,     %;    ;%;    ,%'" << "\n"
-			<< "    %;       %;%;      ,  ;       %;  ;%;   ,%;' " << "\n"
-			<< "     ;%;      %;        ;%;        % ;%;  ,%;'" << "\n"
-			<< "      `%;.     ;%;     %;'         `;%%;.%;'" << "\n"
-			<< "       `:;%.    ;%%. %@;        %; ;@%;%'" << "\n"
-			<< "          `:%;.  :;bd%;          %;@%;'" << "\n"
-			<< "            `@%:.  :;%.         ;@@%;'   " << "\n"
-			<< "              `@%.  `;@%.      ;@@%;         " << "\n"
-			<< "                `@%%. `@%%    ;@@%;        " << "\n"
-			<< "                  ;@%. :@%%  %@@%;       " << "\n"
-			<< "                    %@bd%%%bd%%:;     " << "\n"
-			<< "                      #@%%%%%:;;" << "\n"
-			<< "                      %@@%%%::;" << "\n"
-			<< "                      %@@@%(o);  . '         " << "\n"
-			<< "                      %@@@o%;:(.,'         " << "\n"
-			<< "                  `.. %@@@o%::;         " << "\n"
-			<< "                     `)@@@o%::;         " << "\n"
-			<< "                      %@@(o)::;        " << "\n"
-			<< "                     .%@@@@%::;         " << "\n"
-			<< "                     ;%@@@@%::;.          " << "\n"
-			<< "                    ;%@@@@%%:;;;. " << "\n"
-			<< "                ...;%@@@@@%%:;;;;,..   " << endl;
-		}
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
+{
+    if (this->getSign() && executor.getGrade() <= this->getGradeExe())
+    {
+        std::ofstream out((this->getTarget() + "_shrubbery").c_str());
+        out << "     .{{}}}}}}}." << std::endl
+            << "    {{{{{{(``)}}}." << std::endl
+            << "   {{{{(``)}}}}}}}}}" << std::endl
+            << "  }}}}}}}}}{{(`){{{{" << std::endl
+            << "  }}}}{{{{(``)}}{{{{{" << std::endl
+            << " {{{{(``)}}}}}}}}}}" << std::endl
+            << "{{{{{{{{(``)}}}}}}}}}}" << std::endl
+            << "{{{{{{{{{{{(``)}}}}}}}}" << std::endl
+            << " {{{{{(``)   {{{{(``)}'" << std::endl
+            << "        |   |      " << std::endl
+            << "  ( )  /     \\" << std::endl
+            << " ~~~~~~~~~~~~~~~~~~~" << std::endl;
+        out.close();
+        std::cout << "file created with a shrubbery inside" << std::endl;
+    }
+    else
+        throw GradeTooLowException();
 }

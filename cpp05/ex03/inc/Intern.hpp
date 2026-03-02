@@ -1,18 +1,24 @@
 #ifndef INTERN_HPP
 # define INTERN_HPP
-
-# include <string>
 # include "AForm.hpp"
+# include "PresidentialPardonForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "ShrubberyCreationForm.hpp"
 
-class Intern {
-	public:
-		Intern(void);
-		Intern(const Intern &to_copy);
-		~Intern(void);
+class Intern
+{
+private:
+	std::string	_forms[3];
+public:
+	Intern();
+	Intern(const Intern& ref);
+	Intern& operator=(const Intern& ref);
+	~Intern();
 
-		Intern& operator=(const Intern &assign);
-
-		AForm *makeForm(std::string name, std::string target);		
+	AForm*	makePresidential(std::string target);
+	AForm*	makeRobotomy(std::string target);
+	AForm*	makeShrubbery(std::string target);
+	AForm*	makeForm(std::string form, std::string target);
 };
 
-#endif // INTERN_HPP
+#endif

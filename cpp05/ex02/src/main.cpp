@@ -1,57 +1,42 @@
-#include <cstdlib>
-#include <iostream>
-
-#include "../inc/Bureaucrat.hpp"
 #include "../inc/AForm.hpp"
+#include "../inc/Bureaucrat.hpp"
 #include "../inc/PresidentialPardonForm.hpp"
 #include "../inc/RobotomyRequestForm.hpp"
 #include "../inc/ShrubberyCreationForm.hpp"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-
-int main (int argc, char **argv)
+int main()
 {
-	(void)argc;
-	(void)argv;
-
-	Bureaucrat hermano("Hermano", LOWEST_GRADE);
-
-	Bureaucrat EVIL("EVIL", HIGHEST_GRADE);
-	cout << endl;
-
-	cout << endl;
-	ShrubberyCreationForm scf("EVIL");
-	PresidentialPardonForm ppf("EVIL");
-	RobotomyRequestForm rrf("EVIL");
-	cout << endl;
-
-	EVIL.executeForm(scf);
-	scf.beSigned(EVIL);
-	EVIL.executeForm(scf);
-
-	cout << endl;
-
-	EVIL.executeForm(ppf);
-	ppf.beSigned(EVIL);
-	EVIL.executeForm(ppf);
-
-	cout << endl;
-
-	EVIL.executeForm(rrf);
-	rrf.beSigned(EVIL);
-	EVIL.executeForm(rrf);
-
-	cout << endl;
-
-	try {
-		hermano.executeForm(scf);
-	}
-	catch (std::exception& e) {
-		cerr << e.what() << endl;
-	}
-
-	cout << endl;
-	return EXIT_SUCCESS;
+    try
+    {
+        Bureaucrat john("John", 1);
+        Bureaucrat mike("Mike", 149);
+        
+        std::cout << "=== John (grade 1) tests all forms ===" << std::endl;
+        std::cout << john << std::endl;
+        
+        PresidentialPardonForm pres("homeworld");
+        RobotomyRequestForm robot("Bender");
+        ShrubberyCreationForm shrub("garden");
+        
+        john.signForm(pres);
+        john.signForm(robot);
+        john.signForm(shrub);
+        
+        john.executeForm(pres);  // success
+        john.executeForm(robot); // 50/50
+        john.executeForm(shrub); // success (creates file)
+        
+        std::cout << "\n=== Mike (grade 149) tests ===" << std::endl;
+        std::cout << mike << std::endl;
+        
+        mike.signForm(shrub);    // only shrubbery is signable
+        mike.executeForm(pres);  // fails (not signed + too low)
+        mike.executeForm(shrub); // fails (too low grade)
+        
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return 0;
 }
