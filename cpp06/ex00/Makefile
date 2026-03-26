@@ -1,40 +1,45 @@
-NAME    = Convert
+NAME = Converter
 
 SRC_DIR = src
-SRC     = $(SRC_DIR)/main.cpp $(SRC_DIR)/ScalarConverter.cpp 
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
+SRC = $(SRC_DIR)/Main.cpp $(SRC_DIR)/ScalarConverter.cpp
+
+CC = c++
+CCFLAGS = -std=c++98 -Wall -Wextra -Werror -g
 
 OBJ_DIR = obj
-OBJS    = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+OBJS = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 GREEN   = $'\033[1;32m'
 BLUE    = $'\033[1;34m'
 RESET   = $'\033[0m'
 
+MSG1 = @echo -e "${GREEN}Compiled Successfully ✔︎${RESET}"
+MSG2 = @echo -e "${GREEN}Cleaned Successfully ✔︎${RESET}"
+MSG3 = @echo -e "${GREEN}Cleaned ${NAME} Successfully ✔︎${RESET}"
+HOWTO = @echo -e "${BLUE}To run the program write:./${NAME} [ARGUMENT]${RESET}"
+
 all: $(NAME)
-	@echo -e "$(GREEN)*-----------------------*$(RESET)"
-	@echo -e "$(GREEN)| Compilation finished! |$(RESET)"
-	@echo -e "$(GREEN)*-----------------------*$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CXX) $(CXXFLAGS) -o $@ $^
+	@$(CC) $(OBJS) $(CCFLAGS) -o $(NAME)
+	$(MSG1)
+	$(HOWTO)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+	@$(CC) $(CCFLAGS) -c -o $@ $<
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(OBJ_DIR)
-	@echo -e "$(BLUE)*----------------*$(RESET)"
-	@echo -e "$(BLUE)| Cleaning done! |$(RESET)"
-	@echo -e "$(BLUE)*----------------*$(RESET)"
-
+	@/bin/rm -rf $(OBJS)
+	@/bin/rm -rf $(OBJ_DIR)
+	$(MSG2)
+	
 fclean: clean
 	@rm -f $(NAME)
+	$(MSG3)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY:         all clean fclean re

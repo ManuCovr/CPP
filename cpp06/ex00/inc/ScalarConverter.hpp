@@ -7,6 +7,7 @@
 # include <limits>
 # include <climits>
 # include <cfloat>
+#include <cstdlib>
 
 # define ERROR	0
 # define CHAR	1
