@@ -1,6 +1,7 @@
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -10,6 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <climits>
+
 
 class BitcoinExchange {
     private:
@@ -39,6 +41,8 @@ class BitcoinExchange {
         ~BitcoinExchange();
 };
 
+
 std::ostream &operator<<(std::ostream &o , BitcoinExchange &BTC);
+
 
 #endif

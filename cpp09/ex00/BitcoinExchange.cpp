@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 
+
 static std::string trim(const std::string &s) {
     size_t start = s.find_first_not_of(' ');
     if (start == std::string::npos)
@@ -8,13 +9,16 @@ static std::string trim(const std::string &s) {
     return s.substr(start, end - start + 1);
 }
 
+
 BitcoinExchange::BitcoinExchange() {}
 BitcoinExchange::~BitcoinExchange() {}
+
 
 BitcoinExchange::BitcoinExchange(std::string file_path, std::string csv_path) {
     data_(csv_path);
     input_(file_path);
 }
+
 
 void BitcoinExchange::print(float rate, std::string date) {
     std::map<std::string, float>::iterator it = data.upper_bound(date);
@@ -27,15 +31,19 @@ void BitcoinExchange::print(float rate, std::string date) {
     std::cout << date << " => " << rate << " = " << it->second * rate << std::endl;
 }
 
+
 void BitcoinExchange::parse_file(void) {}
+
 
 bool BitcoinExchange::check_month(unsigned int month) {
     return (month > 0 && month < 13);
 }
 
+
 bool BitcoinExchange::isleap(unsigned int year) {
     return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
 }
+
 
 bool BitcoinExchange::check_day(unsigned int day, unsigned int month, unsigned int year) {
     if (day > 31 || day < 1)
@@ -50,9 +58,11 @@ bool BitcoinExchange::check_day(unsigned int day, unsigned int month, unsigned i
     return true;
 }
 
+
 bool BitcoinExchange::check_year(unsigned int year) {
     return (year >= 2009 && year < 9999);
 }
+
 
 bool BitcoinExchange::check_date(std::string date) {
     unsigned int year, month, day;
@@ -68,9 +78,11 @@ bool BitcoinExchange::check_date(std::string date) {
     return true;
 }
 
+
 void BitcoinExchange::err() {
     std::cerr << "Error: " << err_str << std::endl;
 }
+
 
 void BitcoinExchange::check_and_print(void) {
     std::string line;
@@ -113,6 +125,7 @@ void BitcoinExchange::check_and_print(void) {
     file.close();
 }
 
+
 void BitcoinExchange::input_(std::string input) {
     if (input.size() < 4 || input.substr(input.size() - 4) != ".csv") {
         std::cerr << "Error: file must have a .csv extension." << std::endl;
@@ -122,11 +135,13 @@ void BitcoinExchange::input_(std::string input) {
     check_and_print();
 }
 
+
 std::ostream &operator<<(std::ostream &o, BitcoinExchange &BTC) {
     (void)BTC;
     o << "BitcoinExchange\n";
     return o;
 }
+
 
 bool BitcoinExchange::isdigit_(std::string nbr) {
     for (unsigned long i = 0; i < nbr.size(); i++)
@@ -134,6 +149,7 @@ bool BitcoinExchange::isdigit_(std::string nbr) {
             return false;
     return true;
 }
+
 
 bool BitcoinExchange::isdigit_(std::string nbr, char ignor) {
     for (unsigned long i = 0; i < nbr.size(); i++) {
@@ -147,6 +163,7 @@ bool BitcoinExchange::isdigit_(std::string nbr, char ignor) {
     }
     return true;
 }
+
 
 bool BitcoinExchange::check_data(std::string data, int order) {
     if (order == 1 || order == 3) {
@@ -173,6 +190,7 @@ bool BitcoinExchange::check_data(std::string data, int order) {
     }
     return true;
 }
+
 
 void BitcoinExchange::data_(std::string path) {
     data_path = path;
@@ -206,9 +224,11 @@ void BitcoinExchange::data_(std::string path) {
     file.close();
 }
 
+
 BitcoinExchange::BitcoinExchange(BitcoinExchange &btc) {
     this->data = btc.data;
 }
+
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &btc) {
     if (this == &btc)

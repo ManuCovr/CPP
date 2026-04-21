@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 
+
 static void printContainer(PmergeMe<std::deque<int> > &obj, size_t limit) {
     std::deque<int>::iterator it = obj.begin();
     size_t count = 0;
@@ -13,24 +14,30 @@ static void printContainer(PmergeMe<std::deque<int> > &obj, size_t limit) {
     }
 }
 
+
 int main(int ac, char **av) {
     try {
         if (ac >= 2) {
             PmergeMe<std::deque<int> >  Deque(av);
             PmergeMe<std::vector<int> > Vector(av);
 
+
             size_t limit = Deque.size() > 100 ? 100 : Deque.size();
+
 
             std::cout << "Before: ";
             printContainer(Deque, limit);
             std::cout << std::endl;
 
+
             Deque.sort();
             Vector.sort();
+
 
             std::cout << "After: ";
             printContainer(Deque, limit);
             std::cout << std::endl;
+
 
             Deque.sort_time();
             Vector.sort_time();

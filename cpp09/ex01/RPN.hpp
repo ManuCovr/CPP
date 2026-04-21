@@ -1,6 +1,7 @@
 #ifndef RPN_HPP
 #define RPN_HPP
 
+
 #include <string>
 #include <iostream>
 #include <exception>
@@ -9,6 +10,7 @@
 #include <sstream>
 #include <cstring>
 #include <cstdlib>
+
 
 class RPN {
     private:
@@ -26,6 +28,8 @@ class RPN {
         ~RPN();
 };
 
+
 std::ostream &operator<<(std::ostream &os ,RPN &rpn);
+
 
 #endif

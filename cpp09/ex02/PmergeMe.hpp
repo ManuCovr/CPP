@@ -1,6 +1,7 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+
 #include <string>
 #include <iostream>
 #include <deque>
@@ -14,6 +15,7 @@
 #include <iomanip>
 #include <stdexcept>
 #include <typeinfo>
+
 
 template <typename Container>
 class PmergeMe {
@@ -42,9 +44,12 @@ class PmergeMe {
         void insert(Container &main, Container &pend, ValueType odd, Container &left, Container &vec, bool is_odd, int order);
 };
 
+
 template <typename Container>
 std::ostream& operator<<(std::ostream &os, PmergeMe<Container> &obj);
 
+
 #include "PmergeMe.tpp"
+
 
 #endif
