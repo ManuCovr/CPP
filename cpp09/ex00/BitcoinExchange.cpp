@@ -2,10 +2,10 @@
 
 
 static std::string trim(const std::string &s) {
-    size_t start = s.find_first_not_of(' ');
+    size_t start = s.find_first_not_of(" \r");
     if (start == std::string::npos)
         return "";
-    size_t end = s.find_last_not_of(' ');
+    size_t end = s.find_last_not_of(" \r");
     return s.substr(start, end - start + 1);
 }
 
@@ -99,8 +99,11 @@ void BitcoinExchange::check_and_print(void) {
         return;
     }
     std::getline(file, line);
-    if (trim(line) != "date | value")
-        file.seekg(0);
+    if (trim(line) != "date | value") {
+        err_str = "bad input format.";
+        err();
+        return;
+    }
     while (std::getline(file, line)) {
         if (line.empty())
             continue;
@@ -203,7 +206,15 @@ void BitcoinExchange::data_(std::string path) {
         std::exit(1);
     }
     std::getline(file, line);
+    if (!line.empty() && line[line.size() - 1] == '\r')
+        line.erase(line.size() - 1);
+    if (line != "date,exchange_rate") {
+        std::cerr << "Error: bad database format." << std::endl;
+        std::exit(1);
+    }
     while (std::getline(file, line)) {
+        if (!line.empty() && line[line.size() - 1] == '\r')
+            line.erase(line.size() - 1);
         if (line.empty())
             continue;
         char *cstr = new char[line.size() + 1];
