@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <climits>
+#include <sys/stat.h>
 
 
 class BitcoinExchange {

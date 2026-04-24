@@ -86,6 +86,12 @@ void BitcoinExchange::err() {
 
 void BitcoinExchange::check_and_print(void) {
     std::string line;
+    struct stat st;
+    if (stat(input_path.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
+        err_str = "could not open file.";
+        err();
+        return;
+    }
     std::ifstream file(input_path.c_str());
     if (!file.is_open()) {
         err_str = "could not open file.";
@@ -127,10 +133,6 @@ void BitcoinExchange::check_and_print(void) {
 
 
 void BitcoinExchange::input_(std::string input) {
-    if (input.size() < 4 || input.substr(input.size() - 4) != ".csv") {
-        std::cerr << "Error: file must have a .csv extension." << std::endl;
-        return;
-    }
     input_path = input;
     check_and_print();
 }
